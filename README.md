@@ -17,8 +17,6 @@ Notifications can take in any object and send it to observers.  Just cast it to 
 Notification objects are optional.  If you don't need to attach an object, just pass in `null`.
 
 ```cs
-using NotificationCenter;
-
 //// to post an event
 
 // the notification name can be stored somewhere so a new string isn't always created
@@ -39,10 +37,10 @@ NotificationCenter.RemoveObserver(notificationID, MyNotificationHandler);
 public void MyNotificationHandler(Notification notification) {
 	// get the notification name, in case you need to check for the sender
 	Notification.Name notificationID = notification.name;
-	
+
 	// get the object, if desired
 	int notificationObject = (int)notification.data; // 42!
-	
+
 	// etc...
 }
 ```

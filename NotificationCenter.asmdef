@@ -1,6 +1,6 @@
 {
     "name": "NotificationCenter",
-    "rootNamespace": "NotificationCenter",
+    "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
