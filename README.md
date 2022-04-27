@@ -17,6 +17,8 @@ Notifications can take in any object and send it to observers.  Just cast it to 
 Notification objects are optional.  If you don't need to attach an object, just pass in `null`.
 
 ```cs
+using NotificationCenter;
+
 //// to post an event
 
 // the notification name can be stored somewhere so a new string isn't always created
