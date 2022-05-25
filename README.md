@@ -16,18 +16,17 @@ Add the `NotificationCenter` component to an object in your scene.  Your scene a
 Notifications can take in any object and send it to observers.  Just cast it to the desired type on the recieving end.\
 Notification objects are optional.  If you don't need to attach an object, just pass in `null`.
 
+Posting
 ```cs
-//// to post an event
-
 // the notification name can be stored somewhere so a new string isn't always created
 Notification.Name notificationID = new Notification.Name("some identifying string");
 int anyObject = 42;
 
 NotificationCenter.Post(notificationID, anyObject);
+```
 
-
-//// and to recieve
-
+Recieving
+```cs
 // add an observer with a Notification.Name and a handler
 NotificationCenter.AddObserver(notificationID, MyNotificationHandler);
 
