@@ -11,7 +11,7 @@ An event system for Unity + C# based on Apple's [NotificationCenter](https://dev
 - Import into your project's Plugins folder
 
 ## Usage
-Add the NotificationCenter component to an object in your scene.  Your scene and the NotificationCenter's lifecycles are tied together.\
+Add the `NotificationCenter` component to an object in your scene.  Your scene and the `NotificationCenter`'s lifecycles are tied together.
 
 Notifications can take in any object and send it to observers.  Just cast it to the desired type on the recieving end.\
 Notification objects are optional.  If you don't need to attach an object, just pass in `null`.
