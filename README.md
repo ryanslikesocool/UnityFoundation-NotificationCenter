@@ -1,5 +1,5 @@
 # NotificationCenter
-An event system for Unity + C# based on Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter).
+A simple event system for Unity + C# based on Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter).
 
 ## Installation
 **Recommended Installation** (Unity Package Manager)
