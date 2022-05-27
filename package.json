@@ -1,9 +1,9 @@
 {
   "name": "com.developedwithlove.notificationcenter",
   "displayName": "NotificationCenter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "unity": "2020.3",
-  "description": "An event system for Unity + C# based on Swift's NotificationCenter",
+  "description": "A simple event system for Unity + C# based on Swift's NotificationCenter",
   "documentationUrl": "https://github.com/ryanslikesocool/NotificationCenter",
   "author": {
     "name": "Ryan Boyer",

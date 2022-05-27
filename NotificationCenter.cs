@@ -53,6 +53,16 @@ public class NotificationCenter : MonoBehaviour {
         events[hash].eventDelegate -= action;
     }
 
+    public static void RemoveAllObservers(Notification.Name notification) {
+        int hash = notification.GetHashCode();
+        ValidateNotification(hash);
+
+        foreach (Callback observer in observers[hash]) {
+            events[hash].eventDelegate -= observer;
+        }
+        observers[hash].Clear();
+    }
+
     #endregion
 
     #region Internal
