@@ -1,6 +1,9 @@
 # NotificationCenter
 A simple event system for Unity + C# based on Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter).
 
+## DEPRECATION NOTICE
+This package is deprecated in favor of [Foundation](https://github.com/ryanslikesocool/Foundation), which includes an improved NotificationCenter, as well as other utilities.
+
 ## Installation
 **Recommended Installation** (Unity Package Manager)
 - "Add package from git URL..."
