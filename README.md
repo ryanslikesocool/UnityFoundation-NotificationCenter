@@ -1,8 +1,5 @@
 # NotificationCenter
-A simple event system for Unity + C# based on Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter).
-
-## DEPRECATION NOTICE
-This package is deprecated in favor of [Foundation](https://github.com/ryanslikesocool/Foundation), which includes an improved NotificationCenter, as well as other utilities.
+A simple event system for Unity + C#.
 
 ## Installation
 **Recommended Installation** (Unity Package Manager)
@@ -19,22 +16,22 @@ Add the `NotificationCenter` component to an object in your scene.  Your scene a
 Notifications can take in any object and send it to observers.  Just cast it to the desired type on the recieving end.\
 Notification objects are optional.  If you don't need to attach an object, just pass in `null`.
 
-Posting
+### Posting
 ```cs
-// the notification name can be stored somewhere so a new string isn't always created
+// the notification name can and should be cached somewhere so a new string isn't always created
 Notification.Name notificationID = new Notification.Name("some identifying string");
 int anyObject = 42;
 
-NotificationCenter.Post(notificationID, anyObject);
+NotificationCenter.Default.Post(notificationID, anyObject);
 ```
 
-Recieving
+### Recieving
 ```cs
 // add an observer with a Notification.Name and a handler
-NotificationCenter.AddObserver(notificationID, MyNotificationHandler);
+NotificationCenter.Default.AddObserver(notificationID, MyNotificationHandler);
 
 // remove the observer when it doesn't need to recieve any more events
-NotificationCenter.RemoveObserver(notificationID, MyNotificationHandler);
+NotificationCenter.Default.RemoveObserver(notificationID, MyNotificationHandler);
 
 public void MyNotificationHandler(Notification notification) {
 	// get the notification name, in case you need to check for the sender
