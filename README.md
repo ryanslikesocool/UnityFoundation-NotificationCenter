@@ -1,45 +1,77 @@
-# NotificationCenter
+# Unity Foundation - Notification Center
 A simple event system for Unity + C#.
 
 ## Installation
 **Recommended Installation** (Unity Package Manager)
 - "Add package from git URL..."
-- `https://github.com/ryanslikesocool/NotificationCenter.git`
+- `https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter.git`
 
 **Alternate Installation** (not recommended)
-- Get the latest [release](https://github.com/ryanslikesocool/NotificationCenter/releases)
+- Get the latest [release](https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter/releases)
 - Import into your project's Plugins folder
 
 ## Usage
-Add the `NotificationCenter` component to an object in your scene.  Your scene and the `NotificationCenter`'s lifecycles are tied together.
+`NotificationCenter` creates a default shared instance the first time it is accessed in C#.
 
-Notifications can take in any object and send it to observers.  Just cast it to the desired type on the recieving end.\
-Notification objects are optional.  If you don't need to attach an object, just pass in `null`.
-
-### Posting
+### Notifications
+A `Notification.Name` is the primary identifier for notifications.
+It is required to send and receive notifications.
+It should be initialized once and cached.
 ```cs
-// the notification name can and should be cached somewhere so a new string isn't always created
-Notification.Name notificationID = new Notification.Name("some identifying string");
-int anyObject = 42;
-
-NotificationCenter.Default.Post(notificationID, anyObject);
+static readonly Notification.Name myNotificationName = new Notification.Name("my super special notification");
 ```
 
-### Recieving
+Events are passed around with associated data, stored in a `Notification`.
+Each `Notification` has the following properties:
+| Property | Description |
+| - | - |
+| `Notification.Name name` | The notification's primary identifier. |
+| `object sender` | The object that this notification was sent from. (Optional) |
+| `object data` | Associated data that the sender provides. (Optional) |
+
+### Adding and Removing Observers
+Add and remove notification observers for recieving events with `NotificationCenter.Default.AddObserver` and `NotificationCenter.Default.RemoveObserver`.  In most cases, this would be in an object's initialization and deinitialization stages.
 ```cs
-// add an observer with a Notification.Name and a handler
-NotificationCenter.Default.AddObserver(notificationID, MyNotificationHandler);
+void AddMyObserver() {
+    // notifications will be pushed to `MyObserver` after this is called.
+    NotificationCenter.Default.AddObserver(myNotificationName, MyObserver);
+}
 
-// remove the observer when it doesn't need to recieve any more events
-NotificationCenter.Default.RemoveObserver(notificationID, MyNotificationHandler);
+void RemoveMyObserver() {
+    // notifications will no longer be pushed to `MyObserver` after this is called.
+    NotificationCenter.Default.RemoveObserver(myNotificationName, MyObserver);
+}
+```
 
-public void MyNotificationHandler(Notification notification) {
-	// get the notification name, in case you need to check for the sender
-	Notification.Name notificationID = notification.name;
+### Posting Notifications
+When posting a notification, the notification name is required.  Any observers that listen for `myNotificationName` will recieve the following notification.  The `sender` and `data` are not required.
+```cs
+void PostMyNotification() {
+    // The notification sender can be of any type.
+    object mySender = this;
 
-	// get the object, if desired
-	int notificationObject = (int)notification.data; // 42!
+    // The notification data can be of any type.
+    object myData = (int)42;
 
-	// etc...
+    NotificationCenter.Default.Post(myNotificationName, mySender, myData);
+}
+```
+
+### Observing
+```cs
+// this function will be called every time it recieves a notification with the name `myNotificationName`
+// note the `in` keyword here
+void MyObserver(in Notification notification) {
+    Notification.Name notificationName = notification.name;
+
+    // return early if the notification identifiers are incorrect
+    if (notificationName != myNotificationName || notification.sender != mySender) {
+        return;
+    }
+
+    // get the provided datas
+    if (notification.data is int integer) {
+        Debug.Log(integer); // -> 42!
+    }
 }
 ```
