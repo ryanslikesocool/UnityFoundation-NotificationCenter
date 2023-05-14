@@ -1,6 +1,9 @@
 # Unity Foundation - Notification Center
 A simple event system for Unity + C#.
 
+## Notice
+NotificationCenter depends on [Foundation](https://github.com/ryanslikesocool/UnityFoundation).
+
 ## Installation
 **Recommended Installation** (Unity Package Manager)
 - "Add package from git URL..."
