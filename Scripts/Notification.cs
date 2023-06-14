@@ -23,6 +23,16 @@ namespace Foundation {
 
         public T ReadData<T>() => (T)data;
 
+        public bool TryReadData<T>(out T result) {
+            if (data is T _result) {
+                result = _result;
+                return true;
+            } else {
+                result = default;
+                return false;
+            }
+        }
+
         public Notification(in Name name) {
             this.name = name;
             this.sender = null;
