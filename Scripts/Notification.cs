@@ -56,7 +56,7 @@ namespace Foundation {
         public readonly struct Name {
             public readonly string value;
 
-            public event NotificationCenter.Callback receive {
+            public event NotificationCenter.Callback received {
                 add => NotificationCenter.Default.AddObserver(this, value);
                 remove => NotificationCenter.Default.RemoveObserver(this, value);
             }
