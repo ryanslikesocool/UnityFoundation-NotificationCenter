@@ -1,8 +1,8 @@
 # Unity Foundation - Notification Center
 A simple event system for Unity + C#.
 
-## Notice
-NotificationCenter depends on [Foundation](https://github.com/ryanslikesocool/UnityFoundation).
+## NOTICE
+UnityFoundation-NotificationCenter is not considered production-ready.  Breaking changes are common and support is limited.  Use at your own risk.
 
 ## Installation
 **Recommended Installation** (Unity Package Manager)
@@ -13,13 +13,16 @@ NotificationCenter depends on [Foundation](https://github.com/ryanslikesocool/Un
 - Get the latest [release](https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter/releases)
 - Import into your project's Plugins folder
 
+## Dependencies
+UnityFoundation-NotificationCenter has one dependency:
+- [Foundation](https://github.com/ryanslikesocool/UnityFoundation)
+
 ## Usage
 `NotificationCenter` creates a default shared instance the first time it is accessed in C#.
 
 ### Notifications
 A `Notification.Name` is the primary identifier for notifications.
-It is required to send and receive notifications.
-It should be initialized once and cached.
+It is required to send and receive notifications, and should be initialized once and cached.
 ```cs
 static readonly Notification.Name myNotificationName = new Notification.Name("my super special notification");
 ```

@@ -4,7 +4,8 @@
   "version": "0.1.0-pre.1",
   "unity": "2021.3",
   "description": "A simple event system for Unity + C# based on Swift's NotificationCenter",
-  "documentationUrl": "https://github.com/ryanslikesocool/NotificationCenter",
+  "documentationUrl": "https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter",
+	"licenseUrl": "https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter/blob/main/LICENSE.md",
   "author": {
     "name": "Ryan Boyer",
     "email": "ryanjboyer@gmail.com",
@@ -12,6 +13,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "com.developedwithlove.foundation": ""
+    "com.developedwithlove.foundation": "0.1.0-pre.1"
   }
 }
