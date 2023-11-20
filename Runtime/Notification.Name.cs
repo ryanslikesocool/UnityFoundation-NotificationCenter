@@ -11,10 +11,12 @@ namespace Foundation {
 			/// <summary>
 			/// Shorthand for adding and removing a notification observer.  <c>NotificationCenter.Default</c> will be used.
 			/// </summary>
-			public event NotificationCenter.Callback received {
-				add => NotificationCenter.Default.AddObserver(this, value);
-				remove => NotificationCenter.Default.RemoveObserver(this, value);
-			}
+			//public event NotificationCenter.Callback received {
+			//	add => NotificationCenter.Default.AddObserver(this, value);
+			//	remove => NotificationCenter.Default.RemoveObserver(this, value);
+			//}
+
+			internal readonly int identifier => GetHashCode();
 
 			/// <summary>
 			/// Construct a new notification name.

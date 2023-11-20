@@ -39,13 +39,13 @@ Each `Notification` has the following properties:
 Add and remove notification observers for recieving events with `NotificationCenter.Default.AddObserver` and `NotificationCenter.Default.RemoveObserver`.  In most cases, this would be in an object's initialization and deinitialization stages.
 ```cs
 void AddMyObserver() {
-    // notifications will be pushed to `MyObserver` after this is called.
-    NotificationCenter.Default.AddObserver(myNotificationName, MyObserver);
+    // notifications will be posted to `MyObserver` after this is called.
+    NotificationCenter.Default[myNotificationName].received += MyObserver;
 }
 
 void RemoveMyObserver() {
-    // notifications will no longer be pushed to `MyObserver` after this is called.
-    NotificationCenter.Default.RemoveObserver(myNotificationName, MyObserver);
+    // notifications will no longer be posted to `MyObserver` after this is called.
+    NotificationCenter.Default[myNotificationName].received -= MyObserver;
 }
 ```
 
@@ -53,13 +53,13 @@ void RemoveMyObserver() {
 When posting a notification, the notification name is required.  Any observers that listen for `myNotificationName` will recieve the following notification.  The `sender` and `data` are not required.
 ```cs
 void PostMyNotification() {
-    // The notification sender can be of any type.
+    // the notification sender can be of any type, but it should be a class.
     object mySender = this;
 
-    // The notification data can be of any type.
-    object myData = (int)42;
+    // the notification data can be of any type.
+    object myData = 42; // int
 
-    NotificationCenter.Default.Post(myNotificationName, mySender, myData);
+    NotificationCenter.Default[myNotificationName].Post(mySender, myData);
 }
 ```
 
@@ -68,16 +68,34 @@ void PostMyNotification() {
 // this function will be called every time it recieves a notification with the name `myNotificationName`
 // note the `in` keyword here
 void MyObserver(in Notification notification) {
-    Notification.Name notificationName = notification.name;
+	// safely unwrap the provided data...
+	if(notification.TryReadData(out int integer)) {
+        Debug.Log(integer); // 42
+	}
 
-    // return early if the notification identifiers are incorrect
-    if (notificationName != myNotificationName || notification.sender != mySender) {
-        return;
-    }
+    // ...forcefully unwrap it...
+	int integer = notification.ReadData(); // 42
+	MonoBehaviour mb = notification.ReadData(); // error!
 
-    // get the provided datas
-    if (notification.data is int integer) {
-        Debug.Log(integer); // -> 42!
-    }
+	// ...or access it directly
+	object data = notification.data;
+}
+```
+
+### Safety
+```cs
+void MyObserver(in Notification notification) {
+	if (notification.name != myNotificationName) {
+		throw new NotificationCenter.UnexpectedName(notification, expected: myNotificationName);
+	}
+	if (notification.sender != mySender) {
+		throw new NotificationCenter.UnexpectedSender(notification, expected: mySender);
+	}
+	if (!notification.TryReadData(out int integer)) {
+		throw new NotificationCenter.UnexpectedData(notification, expected: typeof(int));
+	}
+
+	// notification name, sender, and data are all valid
+	Debug.Log(integer); // 42
 }
 ```
