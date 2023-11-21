@@ -24,7 +24,7 @@ Received a notification from an unexpected sender...
 Received: {notification}
 ") { }
 
-			public UnexpectedSender(in Notification notification, in Notification.Name expected) : base($@"
+			public UnexpectedSender(in Notification notification, in Type expected) : base($@"
 Received a notification from an unexpected sender...
 Expected: {expected}
 Received: {notification}
