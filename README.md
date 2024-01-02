@@ -9,10 +9,6 @@ This package is not considered production-ready.  Breaking changes are common an
 - "Add package from git URL..."
 - `https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter.git`
 
-## Dependencies
-This package has one dependency:
-- [Generators](https://github.com/ryanslikesocool/UnityFoundation-Generators)
-
 ## Usage
 `NotificationCenter` creates a default shared instance the first time it is accessed in C#.
 
