@@ -4,10 +4,12 @@ A simple event system for Unity + C#.
 ## NOTICE
 This package is not considered production-ready.  Breaking changes are common and support is limited.  Use at your own risk.
 
-## Installation
-**Recommended Installation** (Unity Package Manager)
-- "Add package from git URL..."
-- `https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter.git`
+## Installation (Unity Package Manager)
+- Select "Add package from git URL..." from the plus menu in the package manager window.
+- Paste the package's git url.
+```
+https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter.git
+```
 
 ## Usage
 `NotificationCenter` creates a default shared instance the first time it is accessed in C#.
