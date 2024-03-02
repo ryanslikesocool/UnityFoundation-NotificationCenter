@@ -17,7 +17,6 @@ namespace Foundation {
 
 		[InitializeOnLoadMethod]
 		private static void InitEditor() {
-			Debug.Log("init editor");
 			_editor = new NotificationCenter();
 		}
 	}
