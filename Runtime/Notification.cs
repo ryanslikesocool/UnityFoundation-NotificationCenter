@@ -93,7 +93,7 @@ namespace Foundation {
 		// MARK: - Override
 
 		public override string ToString() {
-			StringBuilder stringBuilder = new StringBuilder($"name = {name.value}");
+			StringBuilder stringBuilder = new StringBuilder($"name = {name.rawValue}");
 			if (sender != null) {
 				stringBuilder.AppendFormat(", sender = {0}", sender);
 			}

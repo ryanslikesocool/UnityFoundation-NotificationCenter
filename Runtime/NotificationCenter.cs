@@ -7,7 +7,7 @@ namespace Foundation {
 	public sealed partial class NotificationCenter {
 		public delegate void Callback(in Notification notification);
 
-		private Dictionary<int, NotificationEvent> events;
+		private readonly Dictionary<Notification.Name, NotificationEvent> events;
 
 		public NotificationEvent this[in Notification.Name name]
 			=> events[ValidateNotification(name)];
@@ -15,7 +15,7 @@ namespace Foundation {
 		// MARK: - Initialization
 
 		public NotificationCenter() {
-			events = new Dictionary<int, NotificationEvent>();
+			events = new Dictionary<Notification.Name, NotificationEvent>();
 		}
 
 		// MARK: - Internal
@@ -23,20 +23,19 @@ namespace Foundation {
 		/// <summary>
 		/// Validate that the given notification name has the proper stores created.  If not, create them.
 		/// </summary>
-		private int ValidateNotification(in Notification.Name name) {
-			int nameHash = name.identifier;
-			if (!events.ContainsKey(nameHash)) {
-				events.Add(nameHash, new NotificationEvent(name));
+		private Notification.Name ValidateNotification(in Notification.Name name) {
+			if (!events.ContainsKey(name)) {
+				events.Add(name, new NotificationEvent(name));
 			}
-			return nameHash;
+			return name;
 		}
 
 		/// <summary>
 		/// Remove all events and obserevers from this notification center.
 		/// </summary>
-		private void Clear() {
-			foreach (int n in events.Keys) {
-				events[n].Clear();
+		public void Clear() {
+			foreach (Notification.Name name in events.Keys) {
+				events[name].Clear();
 			}
 			events.Clear();
 		}
