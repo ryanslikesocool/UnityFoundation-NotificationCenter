@@ -9,16 +9,26 @@ namespace Foundation {
 
 			internal event Callback eventDelegate;
 
+			/// <summary>
+			/// The event called whenever a notification is recieved.
+			/// </summary>
 			public event Callback received {
 				add => AddObserver(value);
 				remove => RemoveObserver(value);
 			}
 
+			/// <summary>
+			/// Create a notification event.
+			/// </summary>
+			/// <param name="notificationName">The notification name that the event responds to.</param>
 			internal NotificationEvent(in Notification.Name notificationName) {
 				this.notificationName = notificationName;
 				observers = new List<Callback>();
 			}
 
+			/// <summary>
+			/// Remove all observers from the event.
+			/// </summary>
 			internal void Clear()
 				=> observers.Clear();
 
@@ -88,6 +98,7 @@ namespace Foundation {
 				foreach (Callback observer in observers) {
 					eventDelegate -= observer;
 				}
+				observers.Clear();
 			}
 		}
 	}
