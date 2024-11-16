@@ -1,4 +1,3 @@
-#if !FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
 using System;
 using System.Runtime.CompilerServices;
 using static System.Runtime.CompilerServices.MethodImplOptions;
@@ -14,11 +13,11 @@ namespace Foundation {
 			: base(string.Format(MESSAGE_FORMAT_RECEIVED, notification)) { }
 
 		[MethodImpl(AggressiveInlining)]
-		public UnexpectedNotificationNameException(in NotificationName expected)
+		public UnexpectedNotificationNameException(in INotificationName expected)
 			: base(string.Format(MESSAGE_FORMAT_EXPECTED, expected)) { }
 
 		[MethodImpl(AggressiveInlining)]
-		public UnexpectedNotificationNameException(in INotification notification, in NotificationName expected)
+		public UnexpectedNotificationNameException(in INotification notification, in INotificationName expected)
 			: base(string.Format(MESSAGE_FORMAT_RECEIVED_EXPECTED, notification, expected)) { }
 
 		// MARK: - Constants
@@ -42,4 +41,3 @@ Received: {0}
 			";
 	}
 }
-#endif

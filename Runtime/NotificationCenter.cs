@@ -13,7 +13,7 @@ namespace Foundation {
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
 		private readonly Dictionary<NotificationIdentifier, INotificationEvent> events;
 #else
-		private readonly Dictionary<NotificationName, NotificationEvent> events;
+		private readonly Dictionary<Notification.Name, Notification.Event> events;
 #endif
 
 		// MARK: - Lifecycle
@@ -22,7 +22,7 @@ namespace Foundation {
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
 			events = new Dictionary<NotificationIdentifier, INotificationEvent>();
 #else
-			events = new Dictionary<NotificationName, NotificationEvent>();
+			events = new Dictionary<Notification.Name, Notification.Event>();
 #endif
 		}
 
@@ -32,19 +32,19 @@ namespace Foundation {
 		/// <summary>
 		/// Validate that the given notification name has the proper stores created.  If not, create them.
 		/// </summary>
-		private NotificationEvent<Sender, Data> ValidateNotification<Sender, Data>(in NotificationName<Sender, Data> name) where Sender : class {
+		private Notification<Sender, Data>.Event ValidateNotification<Sender, Data>(in Notification<Sender, Data>.Name name) where Sender : class {
 			NotificationIdentifier identifer = new NotificationIdentifier(name, typeof(Sender), typeof(Data));
-			NotificationEvent<Sender, Data> result;
+			Notification<Sender, Data>.Event result;
 
 			if (events.TryGetValue(identifer, out INotificationEvent untypedEvent)) {
-				if (untypedEvent is NotificationEvent<Sender, Data> typedEvent) {
+				if (untypedEvent is Notification<Sender, Data>.Event typedEvent) {
 					result = typedEvent;
 				} else {
 					//throw new NotificationTypeMismatch();
 					throw new NotImplementedException();
 				}
 			} else {
-				result = new NotificationEvent<Sender, Data>();
+				result = new Notification<Sender, Data>.Event();
 				events.Add(identifer, result);
 			}
 
@@ -54,13 +54,13 @@ namespace Foundation {
 		/// <summary>
 		/// Validate that the given notification name has the proper stores created.  If not, create them.
 		/// </summary>
-		private NotificationEvent ValidateNotification(in NotificationName name) {
-			NotificationEvent result;
+		private Notification.Event ValidateNotification(in Notification.Name name) {
+			Notification.Event result;
 
-			if (events.TryGetValue(name, out NotificationEvent value)) {
+			if (events.TryGetValue(name, out Notification.Event value)) {
 				result = value;
 			} else {
-				result = new NotificationEvent();
+				result = new Notification.Event();
 				events.Add(name, result);
 			}
 
@@ -72,48 +72,48 @@ namespace Foundation {
 
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
 		public void Post<Sender, Data>(in Notification<Sender, Data> notification) where Sender : class {
-			NotificationEvent<Sender, Data> notificationEvent = ValidateNotification<Sender, Data>(name: notification.name);
+			Notification<Sender, Data>.Event notificationEvent = ValidateNotification(name: notification.name);
 			notificationEvent.Post(notification: notification);
 		}
 
-		public void Post<Sender, Data>(in NotificationName<Sender, Data> name, in Sender sender, in Data data) where Sender : class {
+		public void Post<Sender, Data>(in Notification<Sender, Data>.Name name, in Sender sender, in Data data) where Sender : class {
 			Notification<Sender, Data> notification = new Notification<Sender, Data>(name: name, sender: sender, data: data);
 			Post(notification);
 		}
 
-		public void Post<Sender>(in NotificationName<Sender, byte> name, in Sender sender) where Sender : class
+		public void Post<Sender>(in Notification<Sender, byte>.Name name, in Sender sender) where Sender : class
 			=> Post(name: name, sender: sender, data: byte.MinValue);
 
-		public void Post(in NotificationName<object, byte> name)
+		public void Post(in Notification<object, byte>.Name name)
 			=> Post(name: name, sender: (object)null, data: byte.MinValue);
 #else
 		public void Post(in Notification notification) {
-			NotificationEvent notificationEvent = ValidateNotification(notification.name);
+			Notification.Event notificationEvent = ValidateNotification(notification.name);
 			notificationEvent.Post(notification);
 		}
 
-		public void Post(in NotificationName name, in object sender, in object data) {
+		public void Post(in Notification.Name name, in object sender, in object data) {
 			Notification notification = new Notification(name: name, sender: sender, data: data);
 			Post(notification);
 		}
 
-		public void Post(in NotificationName name, in object sender)
+		public void Post(in Notification.Name name, in object sender)
 			=> Post(name: name, sender: sender, data: null);
 
-		public void Post(in NotificationName name)
+		public void Post(in Notification.Name name)
 			=> Post(name: name, sender: null, data: null);
 #endif
 
 		// MARK: - Add Observer
 
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
-		public void AddObserver<Sender, Data>(in NotificationName<Sender, Data> name, in Notification<Sender, Data>.Callback callback) where Sender : class {
-			NotificationEvent<Sender, Data> notificationEvent = ValidateNotification<Sender, Data>(name);
+		public void AddObserver<Sender, Data>(in Notification<Sender, Data>.Name name, in Notification<Sender, Data>.Callback callback) where Sender : class {
+			Notification<Sender, Data>.Event notificationEvent = ValidateNotification<Sender, Data>(name);
 			notificationEvent.received += callback;
 		}
 #else
-		public void AddObserver(in NotificationName name, in Notification.Callback callback) {
-			NotificationEvent notificationEvent = ValidateNotification(name);
+		public void AddObserver(in Notification.Name name, in Notification.Callback callback) {
+			Notification.Event notificationEvent = ValidateNotification(name);
 			notificationEvent.received += callback;
 		}
 #endif
@@ -121,13 +121,13 @@ namespace Foundation {
 		// MARK: - Remove Observer
 
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
-		public void RemoveObserver<Sender, Data>(in NotificationName<Sender, Data> name, in Notification<Sender, Data>.Callback callback) where Sender : class {
-			NotificationEvent<Sender, Data> notificationEvent = ValidateNotification<Sender, Data>(name);
+		public void RemoveObserver<Sender, Data>(in Notification<Sender, Data>.Name name, in Notification<Sender, Data>.Callback callback) where Sender : class {
+			Notification<Sender, Data>.Event notificationEvent = ValidateNotification<Sender, Data>(name);
 			notificationEvent.received -= callback;
 		}
 #else
-		public void RemoveObserver(in NotificationName name, in Notification.Callback callback) {
-			NotificationEvent notificationEvent = ValidateNotification(name);
+		public void RemoveObserver(in Notification.Name name, in Notification.Callback callback) {
+			Notification.Event notificationEvent = ValidateNotification(name);
 			notificationEvent.received -= callback;
 		}
 #endif
@@ -135,26 +135,17 @@ namespace Foundation {
 		// MARK: - Utility
 
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
-		public void RemoveAllObservers<Sender, Data>(NotificationName<Sender, Data> name) where Sender : class {
+		public void RemoveAllObservers<Sender, Data>(Notification<Sender, Data>.Name name) where Sender : class {
 			NotificationIdentifier[] matchingIdentifiers = events.Keys.Where(key => key.name == name).ToArray();
 			foreach (NotificationIdentifier identifier in matchingIdentifiers) {
 				events.Remove(identifier);
 			}
 		}
-
-		public void RemoveAllObservers(in INotificationName name, in Type senderType, in Type dataType) {
-			NotificationIdentifier identifier = new NotificationIdentifier(name: name, senderType: senderType, dataType: dataType);
-			events.Remove(identifier);
-		}
-
-		public void RemoveAllObservers<Sender, Data>(in NotificationName<Sender, Data> name) where Sender : class
-			=> RemoveAllObservers(name: name, senderType: typeof(Sender), dataType: typeof(Data));
 #else
-		public void RemoveAllObservers(NotificationName name) {
+		public void RemoveAllObservers(Notification.Name name) {
 			events.Remove(name);
 		}
 #endif
-
 
 		/// <summary>
 		/// Remove all events and obserevers from this notification center.

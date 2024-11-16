@@ -1,44 +1,33 @@
 namespace Foundation {
-	//	public partial struct Notification {
-	//		internal sealed class NotificationEvent<Sender, Data> : INotificationEvent where Sender : class {
-	//			public event Callback received;
-	//
-	//			// MARK: - Lifecycle
-	//
-	//			public NotificationEvent() { }
-	//
-	//			// MARK: -
-	//
-	//			public void Post(in Notification notification)
-	//				=> received?.Invoke(notification);
-	//		}
-	//	}
-
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
-	internal sealed class NotificationEvent<Sender, Data> : INotificationEvent where Sender : class {
-		public event Notification<Sender, Data>.Callback received;
+	public partial struct Notification<Sender, Data> {
+		internal sealed class Event : INotificationEvent {
+			public event Callback received;
 
-		// MARK: - Lifecycle
+			// MARK: - Lifecycle
 
-		public NotificationEvent() { }
+			public Event() { }
 
-		// MARK: -
+			// MARK: -
 
-		public void Post(in Notification<Sender, Data> notification)
-			=> received?.Invoke(notification);
+			public void Post(in Notification<Sender, Data> notification)
+				=> received?.Invoke(notification);
+		}
 	}
 #else
-	internal sealed class NotificationEvent : INotificationEvent {
-		public event Notification.Callback received;
+	public partial struct Notification {
+		internal sealed class Event : INotificationEvent {
+			public event Callback received;
 
-		// MARK: - Lifecycle
+			// MARK: - Lifecycle
 
-		public NotificationEvent() { }
+			public Event() { }
 
-		// MARK: -
+			// MARK: -
 
-		public void Post(in Notification notification)
-			=> received?.Invoke(notification);
+			public void Post(in Notification notification)
+				=> received?.Invoke(notification);
+		}
 	}
 #endif
 }

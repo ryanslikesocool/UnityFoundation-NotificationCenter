@@ -7,13 +7,13 @@ namespace Foundation {
 	/// </summary>
 	/// <typeparam name="Sender">The type of the notification's <see cref="sender"/>.</typeparam>
 	/// <typeparam name="Data">The type of the notification's <see cref="data"/>.</typeparam>
-	public readonly struct Notification<Sender, Data> : INotification where Sender : class {
+	public readonly partial struct Notification<Sender, Data> : INotification where Sender : class {
 		public delegate void Callback(in Notification<Sender, Data> notification);
 
 		/// <summary>
 		/// The name of the notification.
 		/// </summary>
-		public readonly NotificationName<Sender, Data> name;
+		public readonly Name name;
 
 		/// <summary>
 		/// The object that sent the notification.
@@ -33,7 +33,7 @@ namespace Foundation {
 		/// <param name="name">The name of the notification.</param>
 		/// <param name="sender">The object that sent the notification.</param>
 		/// <param name="data">Additional data associated with the notification.</param>
-		public Notification(in NotificationName<Sender, Data> name, in Sender sender, in Data data) {
+		public Notification(in Name name, in Sender sender, in Data data) {
 			this.name = name;
 			this.sender = sender;
 			this.data = data;
@@ -44,13 +44,13 @@ namespace Foundation {
 		/// </summary>
 		/// <param name="name">The name of the notification.</param>
 		/// <param name="sender">The object that sent the notification.</param>
-		public Notification(in NotificationName<Sender, Data> name, in Sender sender) : this(name: name, sender: sender, data: default) { }
+		public Notification(in Name name, in Sender sender) : this(name: name, sender: sender, data: default) { }
 
 		/// <summary>
 		/// Create new notification data with a name.
 		/// </summary>
 		/// <param name="name">The name of the notification.</param>
-		public Notification(in NotificationName<Sender, Data> name) : this(name: name, sender: default, data: default) { }
+		public Notification(in Name name) : this(name: name, sender: default, data: default) { }
 
 		// MARK: - Override
 
@@ -82,7 +82,7 @@ namespace Foundation {
 		/// <summary>
 		/// The name of the notification.
 		/// </summary>
-		public readonly NotificationName name;
+		public readonly Name name;
 
 		/// <summary>
 		/// The object that sent the notification.
@@ -94,7 +94,7 @@ namespace Foundation {
 		/// </summary>
 		public readonly object data;
 
-		// MARK: - Initializers
+		// MARK: - Lifecycle
 
 		/// <summary>
 		/// Create new notification data with a name, sender, and data.
@@ -102,7 +102,7 @@ namespace Foundation {
 		/// <param name="name">The name of the notification.</param>
 		/// <param name="sender">The object that sent the notification.</param>
 		/// <param name="data">Additional data associated with the notification.</param>
-		public Notification(in NotificationName name, in object sender, in object data) {
+		public Notification(in Name name, in object sender, in object data) {
 			this.name = name;
 			this.sender = sender;
 			this.data = data;
@@ -113,13 +113,13 @@ namespace Foundation {
 		/// </summary>
 		/// <param name="name">The name of the notification.</param>
 		/// <param name="sender">The object that sent the notification.</param>
-		public Notification(in NotificationName name, in object sender) : this(name: name, sender: sender, data: default) { }
+		public Notification(in Name name, in object sender) : this(name: name, sender: sender, data: default) { }
 
 		/// <summary>
 		/// Create new notification data with a name.
 		/// </summary>
 		/// <param name="name">The name of the notification.</param>
-		public Notification(in NotificationName name) : this(name: name, sender: default, data: default) { }
+		public Notification(in Name name) : this(name: name, sender: default, data: default) { }
 
 		// MARK: - Sender
 

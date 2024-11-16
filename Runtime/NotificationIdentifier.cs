@@ -1,5 +1,6 @@
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
 using System;
+using UnityEditor;
 
 namespace Foundation {
 	internal readonly struct NotificationIdentifier {
