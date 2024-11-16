@@ -1,14 +1,14 @@
 {
-	"name": "com.developedwithlove.foundation.notificationcenter",
-	"displayName": "Unity Foundation - Notification Center",
-	"version": "0.1.0-pre.2",
-	"unity": "2021.3",
-	"description": "A simple event system for Unity + C# inspired by Swift's NotificationCenter",
-	"documentationUrl": "https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter",
-	"licenseUrl": "https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter/blob/main/LICENSE.md",
-	"author": {
-		"name": "Ryan Boyer",
-		"url": "https://ryanjboyer.com/"
-	},
-	"license": "MIT"
+  "name": "com.developedwithlove.foundation.notificationcenter",
+  "displayName": "Unity Foundation - Notification Center",
+  "version": "0.1.0-pre.3",
+  "unity": "2021.3",
+  "description": "A simple event system for Unity + C# inspired by Swift's NotificationCenter",
+  "documentationUrl": "https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter",
+  "licenseUrl": "https://github.com/ryanslikesocool/UnityFoundation-NotificationCenter/blob/main/LICENSE.md",
+  "author": {
+    "name": "Ryan Boyer",
+    "url": "https://ryanjboyer.com/"
+  },
+  "license": "MIT"
 }
