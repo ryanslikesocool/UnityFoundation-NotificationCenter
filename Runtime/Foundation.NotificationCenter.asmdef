@@ -1,7 +1,9 @@
 {
     "name": "Foundation.NotificationCenter",
     "rootNamespace": "Foundation",
-    "references": [],
+    "references": [
+        "GUID:d9366e63b425d409b97e07a533ec79d9"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -9,6 +11,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.developedwithlove.foundation",
+            "expression": "",
+            "define": "FOUNDATION"
+        }
+    ],
     "noEngineReferences": false
 }

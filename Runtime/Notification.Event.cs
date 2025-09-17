@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Foundation {
 #if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
 	public partial struct Notification<Sender, Data> {
@@ -10,6 +12,7 @@ namespace Foundation {
 
 			// MARK: -
 
+			[HideInCallstack]
 			public void Post(in Notification<Sender, Data> notification)
 				=> received?.Invoke(notification);
 		}
@@ -25,6 +28,7 @@ namespace Foundation {
 
 			// MARK: -
 
+			[HideInCallstack]
 			public void Post(in Notification notification)
 				=> received?.Invoke(notification);
 		}

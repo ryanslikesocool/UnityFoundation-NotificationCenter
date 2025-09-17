@@ -1,10 +1,13 @@
 # Unity Foundation - Notification Center
-A simple event system for Unity + C# inspired by Swift's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter).\
+A simple event system for Unity + C# inspired by Swift's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter).
+<br/>
 Notification Center falls under the [Unity Foundation](https://github.com/ryanslikesocool/UnityFoundation/) umbrella.
 
 ## NOTICE
-**This package is under development and not considered production-ready.**\
-Breaking changes are common, documentation is incomplete, and support is limited.  Use at your own risk.
+**This package is under development and not considered production-ready.**
+<br/>
+Breaking changes are common, documentation is incomplete, and support is limited.
+Use at your own risk.
 
 ## Installation (Unity Package Manager)
 - Select "Add package from git URL..." from the plus (+) menu in the package manager window.

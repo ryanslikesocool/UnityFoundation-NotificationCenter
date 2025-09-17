@@ -81,11 +81,19 @@ namespace Foundation {
 			Post(notification);
 		}
 
+#if FOUNDATION
+		public void Post<Sender>(in Notification<Sender, Never>.Name name, in Sender sender) where Sender : class
+			=> Post(name: name, sender: sender, data: default);
+
+		public void Post(in Notification<object, Never>.Name name)
+			=> Post(name: name, sender: (object)null, data: default);
+#else
 		public void Post<Sender>(in Notification<Sender, byte>.Name name, in Sender sender) where Sender : class
 			=> Post(name: name, sender: sender, data: byte.MinValue);
 
 		public void Post(in Notification<object, byte>.Name name)
 			=> Post(name: name, sender: (object)null, data: byte.MinValue);
+#endif
 #else
 		public void Post(in Notification notification) {
 			Notification.Event notificationEvent = ValidateNotification(notification.name);
