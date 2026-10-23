@@ -45,32 +45,6 @@ namespace Foundation {
 		/// <param name="name">The name of the notification.</param>
 		/// <param name="sender">The object that sent the notification.</param>
 		public Notification(in Name name, in Sender sender) : this(name: name, sender: sender, data: default) { }
-
-		/// <summary>
-		/// Create new notification data with a name.
-		/// </summary>
-		/// <param name="name">The name of the notification.</param>
-		public Notification(in Name name) : this(name: name, sender: default, data: default) { }
-
-		// MARK: - Override
-
-		public override string ToString() {
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.AppendFormat(TOSTRING_FORMAT_NAME, name);
-			if (sender != null) {
-				stringBuilder.AppendFormat(TOSTRING_FORMAT_SENDER, sender);
-			}
-			if (data != null) {
-				stringBuilder.AppendFormat(TOSTRING_FORMAT_DATA, data);
-			}
-			return stringBuilder.ToString();
-		}
-
-		// MARK: - Constants
-
-		private const string TOSTRING_FORMAT_NAME = "name = {0}";
-		private const string TOSTRING_FORMAT_SENDER = ", sender = {0}";
-		private const string TOSTRING_FORMAT_DATA = ", data = {0}";
 	}
 #else
 	/// <summary>
@@ -114,12 +88,6 @@ namespace Foundation {
 		/// <param name="name">The name of the notification.</param>
 		/// <param name="sender">The object that sent the notification.</param>
 		public Notification(in Name name, in object sender) : this(name: name, sender: sender, data: default) { }
-
-		/// <summary>
-		/// Create new notification data with a name.
-		/// </summary>
-		/// <param name="name">The name of the notification.</param>
-		public Notification(in Name name) : this(name: name, sender: default, data: default) { }
 
 		// MARK: - Sender
 
@@ -180,6 +148,21 @@ namespace Foundation {
 				return false;
 			}
 		}
+	}
+#endif
+
+	// MARK: - Shared
+
+#if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
+	public readonly partial struct Notification<Sender, Data> {
+#else
+	public readonly partial struct Notification {
+#endif
+		/// <summary>
+		/// Create new notification data with a name.
+		/// </summary>
+		/// <param name="name">The name of the notification.</param>
+		public Notification(in Name name) : this(name: name, sender: default, data: default) { }
 
 		// MARK: - Override
 
@@ -201,5 +184,4 @@ namespace Foundation {
 		private const string TOSTRING_FORMAT_SENDER = ", sender = {0}";
 		private const string TOSTRING_FORMAT_DATA = ", data = {0}";
 	}
-#endif
 }

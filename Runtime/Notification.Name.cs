@@ -6,7 +6,7 @@ namespace Foundation {
 		/// <summary>
 		/// <see cref="Notification.Name"/> acts as the primary identifier for a <see cref="Notification"/>.
 		/// </summary>
-		public readonly struct Name : INotificationName, IEquatable<Name>, IEquatable<INotificationName> {
+		public readonly partial struct Name : INotificationName, IEquatable<Name> {
 			public readonly string rawValue;
 			public readonly Type senderType;
 			public readonly Type dataType;
@@ -25,10 +25,49 @@ namespace Foundation {
 				this.dataType = typeof(Data);
 			}
 
-			// MARK: - IEquatable
+			// MARK: - IEquatable<Name>
 
 			public readonly bool Equals(Name other)
 				=> this.rawValue == other.rawValue;
+		}
+	}
+#else
+	public partial struct Notification {
+		/// <summary>
+		/// <see cref="Notification.Name"/> acts as the primary identifier for a <see cref="Notification"/>.
+		/// </summary>
+		public readonly partial struct Name : INotificationName, IEquatable<Name> {
+			public readonly string rawValue;
+
+			/// <summary>
+			/// Construct a new notification name.
+			/// </summary>
+			/// <remarks>
+			/// Notification names are used as identifiers when posting and receiving notifications.
+			/// Only one notification name should be created per-identifier.
+			/// </remarks>
+			/// <param name="rawValue">The identifier.</param>
+			public Name(in string rawValue) {
+				this.rawValue = rawValue;
+			}
+
+			// MARK: - IEquatable<Name>
+
+			public readonly bool Equals(Name other)
+				=> this.rawValue == other.rawValue;
+		}
+	}
+#endif
+
+	// MARK: - Shared
+
+#if FOUNDATION_NOTIFICATIONCENTER_TYPESAFE
+	public readonly partial struct Notification<Sender, Data> {
+#else
+	public readonly partial struct Notification {
+#endif
+		public readonly partial struct Name {
+			// MARK: - IEquatable<INotificationName>
 
 			public readonly bool Equals(INotificationName other) {
 				if (other is Name typedOther) {
@@ -60,72 +99,21 @@ namespace Foundation {
 
 			// MARK: - Override
 
+			public readonly override int GetHashCode()
+				=> rawValue.GetHashCode();
+
+			public readonly override string ToString()
+				=> string.Format(TOSTRING_FORMAT, typeof(Name), rawValue);
+
 			public readonly override bool Equals(object obj) => obj switch {
 				Name other => this.Equals(other),
 				INotificationName other => this.Equals(other),
 				_ => false
 			};
 
-			public readonly override int GetHashCode()
-				=> rawValue.GetHashCode();
-
-			public readonly override string ToString()
-				=> string.Format(TOSTRING_FORMAT, typeof(Notification<Sender, Data>.Name), rawValue);
-
 			// MARK: - Constants
 
 			private const string TOSTRING_FORMAT = "{0}({1})";
 		}
 	}
-#else
-	public partial struct Notification {
-		/// <summary>
-		/// <see cref="Notification.Name"/> acts as the primary identifier for a <see cref="Notification"/>.
-		/// </summary>
-		public readonly struct Name : INotificationName, IEquatable<Name> {
-			public readonly string rawValue;
-
-			/// <summary>
-			/// Construct a new notification name.
-			/// </summary>
-			/// <remarks>
-			/// Notification names are used as identifiers when posting and receiving notifications.
-			/// Only one notification name should be created per-identifier.
-			/// </remarks>
-			/// <param name="rawValue">The identifier.</param>
-			public Name(in string rawValue) {
-				this.rawValue = rawValue;
-			}
-
-			// MARK: - IEquatable<Name>
-
-			public readonly bool Equals(Name other)
-				=> this.rawValue == other.rawValue;
-
-			// MARK: - Operators
-
-			public static bool operator ==(Name lhs, Name rhs)
-				=> lhs.rawValue == rhs.rawValue;
-
-			public static bool operator !=(Name lhs, Name rhs)
-				=> lhs.rawValue != rhs.rawValue;
-
-			// MARK: - Override
-
-			public readonly override bool Equals(object obj) => obj switch {
-				Name other => this.Equals(other),
-				_ => false
-			};
-
-			public readonly override int GetHashCode() => rawValue.GetHashCode();
-
-			public readonly override string ToString()
-				=> string.Format(TOSTRING_FORMAT, typeof(Notification.Name), rawValue);
-
-			// MARK: - Constants
-
-			private const string TOSTRING_FORMAT = "{0}({1})";
-		}
-	}
-#endif
 }

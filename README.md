@@ -31,7 +31,7 @@ In the editor, this instance is recreated each time Play mode is entered.
 NotificationCenter defaultNotificationCenter = NotificationCenter.Default;
 ```
 
-When in the Unity editor, a shared editor instance becomes available.  The editor notification center is persistent thoughout the lifecycle of the editor application.
+When in the Unity editor, a shared editor instance becomes available.  The editor notification center is persistent throughout the lifecycle of the editor application.
 ```cs
 NotificationCenter editorNotificationCenter = NotificationCenter.Editor;
 ```
@@ -40,7 +40,7 @@ NotificationCenter editorNotificationCenter = NotificationCenter.Editor;
 A `Notification.Name` is the primary identifier for notifications.  Each notification should have a unique name to avoid potential collisions.
 It is required to send and receive notifications, and should be initialized once and cached.
 ```cs
-static readonly Notification.Name myNotificationName = new Notification.Name("my super special notification");
+static readonly Notification.Name myNotificationName = new("my super special notification");
 ```
 
 Events are posted with associated data, stored in a `Notification`.
